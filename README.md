@@ -2,7 +2,7 @@ Script that automatically plays the dinosaur game
 =
 
 ## Current state: *WIP*
-on my local machine screen captures and pixel grabbing is unstable, which leads to some weird behavior.  
+on my local machine screen capturing and pixel grabbing is unstable, which leads to some weird behavior.  
 
 ## Branches
 *master*: working script (you'll need to modify pixel grabbing coordinates)  
