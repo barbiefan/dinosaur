@@ -10,4 +10,4 @@ my personal best is 621
 
 *dev*: experimenting with velocity measurements, multithreaded logic and jump trajectory  
 don't judge... fork and do better...  
-my personal best is: 808 (main.py) 952 (main_simple_jump.py)
+my personal best is: 808 (main.py) 1413 (main_simple_jump.py)
