@@ -4,28 +4,50 @@ import keyboard
 import os
 from copy import deepcopy
 
+
+
 os.environ["DISPLAY"] = ":0"
 
-x1, x2 = 500,600
 
+xs = list(range(250,400,2))
+print(xs)
 COORDS = [
-            (x1, 360),
-            (x2, 360)
+            (x, 360) for x in xs
          ]
-DISTANCE = x2-x1
 DINO = 260
 
 
 def main():
-    queue = []
+    queue = [0]
+    flag = True
     while True:
         frame = ImageGrab.grab()
-        pixel1 = frame.getpixel(COORDS[0])
-        pixel2 = frame.getpixel(COORDS[1])
-        if sum(pixel2)/3 < 170:
-            queue.append(time.perf_counter())
+        pixels = [frame.getpixel(coord) for coord in COORDS]
+        if (83,83,83) in pixels:
+            time_pos = time.perf_counter()
+            if flag:
+                timestamp = time_pos
+                flag = False
+            else:
+                timestamp = time_pos-queue[-1]
+                #print(timestamp)
+            if timestamp > 0.5:
+                jump()
+                queue.pop(0)
+                queue.append(time_pos)
+                print("jumped", queue)
+        '''
         if sum(pixel1)/3 < 170:
-            velocity = DISTANCE/(time.perf_counter()-queue.pop(0))
-            print(velocity)
-            
+            timestamp = time.perf_counter()-queue[-1]
+            if timestamp > 0.5:
+                print("pixel1", queue)
+                velocity = DISTANCE/(time.perf_counter()-queue.pop(0))
+                print(velocity)
+        ''' 
+
+def jump():
+    keyboard.send('space')
+
+
+
 main()
