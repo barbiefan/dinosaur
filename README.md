@@ -9,5 +9,5 @@ on my local machine screen capturing and pixel grabbing is unstable, which leads
 my personal best is 621
 
 *dev*: experimenting with velocity measurements, multithreaded logic and jump trajectory  
-don't judge... fork and do better...
-my personal best is 808
+don't judge... fork and do better...  
+my personal best is: 808 (main.py) 952 (main_simple_jump.py)
