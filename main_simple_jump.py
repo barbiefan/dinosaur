@@ -6,19 +6,15 @@ import numpy
 
 os.environ["DISPLAY"] = ":0"
 
-background = (32,33,36)
+background = [32,33,36]
 enemy = (172,172,172)
 
-y1 = 413 #y2-y1=15
-y2 = 437
-y3 = 438 #y4-y3=19
-y4 = 470
+off = 60
 
-x1 = 131 #x2-x1=50
-x2 = 220
-
-upper_flag = []
-lower_flag = []
+x1 = 240+off
+y1 = 405
+x2 = 240+off
+y2 = 460
 
 DINO = 260
 
@@ -26,13 +22,10 @@ def main():
     upper_flag = False
     lower_flag = False
     while True:
-        time.sleep(0.05)
-
         frame = ImageGrab.grab()
-        pixels = numpy.array(frame)
-        upper_zone = pixels[y1:y2,x1:x2]
-        lower_zone = pixels[y3:y4,x1:x2]
-
+        nframe = numpy.array(frame)
+        upper_zone = nframe[y1-10:y1+10,x1-10:x1+10]
+        lower_zone = nframe[y2-10:y2+10,x2-10:x2+10]
         if enemy in upper_zone:
             upper_flag = True
         if enemy in lower_zone:
@@ -42,31 +35,21 @@ def main():
 
 def action(u_flag, l_flag):
     if u_flag:
-        if l_flag:
-            jump(True)
-        else:
-            duck(0.4)
-    elif l_flag:
-        jump(False)
+        print('duck')
+        duck()
+    if l_flag:
+        print('jump')
+        jump()
         
-def duck(sec):
+def duck():
     keyboard.press('down arrow')
-    time.sleep(sec)
+    time.sleep(0.3)
     keyboard.release('down arrow')
 
-def jump(long):
-    if not long:
+def jump():
         keyboard.press('space')
         time.sleep(0.2)
         keyboard.release('space')
-        print('short jumped')
-        duck(0.1)
-        print('ducked')
-    else:
-        keyboard.press('space')
-        time.sleep(0.5)
-        keyboard.release('space')
-        print('long jumped')
 
 main()
 
