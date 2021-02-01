@@ -11,10 +11,11 @@ enemy = (172,172,172)
 
 off = 60
 
+
 x1 = 240+off
-y1 = 405
+y1 = 420
 x2 = 240+off
-y2 = 460
+y2 = 465
 
 DINO = 260
 
@@ -24,8 +25,8 @@ def main():
     while True:
         frame = ImageGrab.grab()
         nframe = numpy.array(frame)
-        upper_zone = nframe[y1-10:y1+10,x1-10:x1+10]
-        lower_zone = nframe[y2-10:y2+10,x2-10:x2+10]
+        upper_zone = nframe[y1,x1-20:x1+20]
+        lower_zone = nframe[y2,x2-20:x2+20]
         if enemy in upper_zone:
             upper_flag = True
         if enemy in lower_zone:
@@ -34,7 +35,7 @@ def main():
         upper_flag, lower_flag = False, False
 
 def action(u_flag, l_flag):
-    if u_flag:
+    if u_flag and not l_flag:
         print('duck')
         duck()
     if l_flag:
