@@ -10,3 +10,4 @@ my personal best is 362
 
 *dev*: experimenting with velocity measurements, multithreaded logic and jump trajectory  
 don't judge... fork and do better...
+my personal best is 621
