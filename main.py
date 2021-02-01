@@ -8,12 +8,17 @@ from copy import deepcopy
 
 os.environ["DISPLAY"] = ":0"
 
-end = 380
-xs = list(range(265,end,1))
+end = 340
+xs = list(range(290,end,1))
 COORDS = [
             [x, 360] for x in xs
          ]
-height_coords = (end, 340)
+height_coords = [
+            (end, 340),
+            (end-2, 340),
+            (end-4, 340)
+         ]
+passed_coords = (200, 360)
 
 DINO = 260
 print(COORDS)
@@ -21,28 +26,32 @@ print(COORDS)
 
 def main():
     counter = 0
-    queue = [0]
-    beginig_flag = True
+    forward_queue = [0]
     height_flag = False
     while True:
         frame = ImageGrab.grab()
         pixels = [frame.getpixel(tuple(coord)) for coord in COORDS]
-        height_pixel = frame.getpixel(height_coords)
+        height_pixels = [frame.getpixel(coord) for coord in height_coords]
+        #passed_pixel = frame.getpixel(passed_coords)
+        time_pos = time.perf_counter()
+        if (83,83,83) in height_pixels:
+            height_flag = True
         if (83,83,83) in pixels:
-            if height_pixel == (83,83,83):
-                height_flag = True
-            time_pos = time.perf_counter()
-            if beginig_flag:
-                timestamp = time_pos
-                beginig_flag = False
-            else:
-                timestamp = time_pos-queue[-1]
-                #print(timestamp)
+            timestamp = time_pos-forward_queue[-1]
             if timestamp > 0.5:
                 jump(height_flag)
-                queue.pop(0)
-                queue.append(time_pos)
-                print("jumped", queue)
+                forward_queue.pop(0)
+                forward_queue.append(time_pos)
+                print("jumped", forward_queue)
+                height_flag = False
+        #if passed_pixel == (83,83,83):
+        #   print('ducked for 0.2')
+        #    duck(0.2)
+
+
+        #elif height_flag:
+        #    duck()
+
         '''
         if sum(pixel1)/3 < 170:
             timestamp = time.perf_counter()-queue[-1]
@@ -58,14 +67,23 @@ def main():
             COORDS.append([xs[-1], 360])
             print(COORDS)
 
+def duck(sec):
+    keyboard.press('down arrow')
+    time.sleep(sec)
+    keyboard.release('down arrow')
+
 def jump(flag):
-    if flag:
+    if not flag:
+        keyboard.press('space')
+        time.sleep(0.2)
+        keyboard.release('space')
+        print('short jumped')
+        duck(0.1)
+        print('ducked')
+    else:
         keyboard.press('space')
         time.sleep(0.5)
         keyboard.release('space')
-    else:
-        keyboard.send('space')
-
-
+        print('long jumped')
 
 main()
