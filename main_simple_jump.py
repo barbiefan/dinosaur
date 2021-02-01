@@ -1,5 +1,6 @@
 from PIL import ImageGrab
 import time
+import PIL
 import keyboard
 import os
 import numpy
@@ -9,15 +10,15 @@ os.environ["DISPLAY"] = ":0"
 background = [32,33,36]
 enemy = (172,172,172)
 
-off = 60
+DINO = 245
+off = 360
+buff = off
 
+x1 = DINO+off
+y1 = 600
+x2 = DINO+off
+y2 = 700
 
-x1 = 240+off
-y1 = 420
-x2 = 240+off
-y2 = 465
-
-DINO = 260
 
 def main():
     upper_flag = False
@@ -25,8 +26,8 @@ def main():
     while True:
         frame = ImageGrab.grab()
         nframe = numpy.array(frame)
-        upper_zone = nframe[y1,x1-20:x1+20]
-        lower_zone = nframe[y2,x2-20:x2+20]
+        upper_zone = nframe[y1,x1-buff:x1]
+        lower_zone = nframe[y2,x2-buff:x2]
         if enemy in upper_zone:
             upper_flag = True
         if enemy in lower_zone:
@@ -36,22 +37,30 @@ def main():
 
 def action(u_flag, l_flag):
     if u_flag and not l_flag:
-        print('duck')
         duck()
     if l_flag:
-        print('jump')
         jump()
         
 def duck():
     keyboard.press('down arrow')
-    time.sleep(0.3)
+    time.sleep(0.5)
     keyboard.release('down arrow')
 
 def jump():
         keyboard.press('space')
-        time.sleep(0.2)
+        time.sleep(0.1)
         keyboard.release('space')
 
+def save_detection_area_example():
+    im = PIL.Image.open('sample.png')
+    im = numpy.array(im)
+    im[y1,x1-buff:x1] = (255,0,0)
+    im[y2,x2-buff:x2] = (0,0,255)
+    im_ = PIL.Image.fromarray(im)
+    im_.save('area.png')
+
+#save_detection_area_example()
+time.sleep(2)
 main()
 
 '''
