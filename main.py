@@ -9,7 +9,7 @@ from copy import deepcopy
 os.environ["DISPLAY"] = ":0"
 
 end = 380
-xs = list(range(250,end,1))
+xs = list(range(265,end,1))
 COORDS = [
             [x, 360] for x in xs
          ]
